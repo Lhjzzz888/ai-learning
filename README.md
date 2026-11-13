@@ -4,7 +4,7 @@
 
 学习顺序按“先做出结果 → 理解原理 → 对照实现 → 分析失败”推进。数学按项目需要补充；每一阶段用实践成果判断是否可以继续。
 
-> **材料状态说明**：目前仓库只有 [第一课：线性回归](01-linear-regression/README.md) 提供可运行代码。下表其余模块是学习计划，详细任务见 [阶段指南](docs/ROADMAP.md)。代码已提供不代表学习者已经掌握，个人进度请用 [学习记录模板](docs/LEARNING_LOG_TEMPLATE.md) 记录。
+> **材料状态说明**：模块 00–09 均提供最小代码案例与中文说明，从回归一路走到字符级 Transformer 的训练、保存和推理。案例使用合成数据、库内置数字图像和仓库内原创文本，安装依赖后不需要下载数据。代码已提供不代表学习者已经掌握，个人进度请用 [学习记录模板](docs/LEARNING_LOG_TEMPLATE.md) 记录。
 
 ## 从这里开始
 
@@ -19,24 +19,54 @@ Windows 上若 `python` 不可用，可尝试 `py`。示例使用虚构数据，
 
 跑通后，先说明：输入是什么、模型学到了什么、训练集和测试集为什么分开、MAE 的单位是什么。再进入模块 02，把闭式最小二乘解与梯度下降联系起来。
 
+## 安装后续课程环境
+
+建议使用 **Python 3.11 或 3.12**，在仓库根目录建立独立环境。以下依赖版本固定，测试命令使用 Python 标准库的 unittest。
+
+```bash
+python -m venv .venv
+```
+
+激活环境：Windows PowerShell 使用 `.\.venv\Scripts\Activate.ps1`；macOS/Linux 使用 `source .venv/bin/activate`。若 PowerShell 限制激活脚本，也可直接用 `.\.venv\Scripts\python.exe` 代替下面的 `python`。
+
+```bash
+# 只学模块 00–04
+python -m pip install -r requirements-basics.txt
+# 学完整路线（包含上面的基础依赖）
+python -m pip install -r requirements.txt
+```
+
+默认使用 CPU。先按每课 README 的短运行命令验证流程，再增加训练预算。训练生成的检查点、CSV/SVG 曲线和 JSON 报告放在 `artifacts/`，该目录已被 Git 忽略；重新实验时建议用 `--output-dir` 指定新目录，保留对照结果。
+
 ## 必学主线
 
 模块 00 是基础检查；模块 01–09 按顺序推进。每个模块的详细先修、练习和验收都在 [阶段指南](docs/ROADMAP.md)。
 
 | 模块 | 主题 | 要交出的成果 | 材料状态 |
 | --- | --- | --- | --- |
-| 00 | Python、NumPy 与必要数学 | 能用函数处理数据、解释数组形状，计算均值和简单导数 | 计划中 |
-| 01 | 一元线性回归 | 运行房价示例，解释最小二乘解和测试 MAE，计算常数预测基线 | [代码已提供](01-linear-regression/README.md)；基线是动手练习 |
-| 02 | 梯度下降、多元回归与正则化 | NumPy 梯度下降实验；对比线性回归、Ridge 和 Lasso | 计划中 |
-| 03 | 逻辑回归与分类评估 | 二分类实验；混淆矩阵、精确率、召回率与阈值比较 | 计划中 |
-| 04 | 决策树、随机森林与梯度提升 | 在同一数据划分上比较简单基线、线性模型和树模型 | 计划中 |
-| 05 | PyTorch 与多层感知机（MLP） | 自己写训练循环，完成小批次过拟合、验证与保存加载 | 计划中 |
-| 06 | 卷积神经网络（CNN） | 在同一图像任务上比较 MLP 与小型 CNN，分析错分样本 | 计划中 |
-| 07 | 文本处理与字符级语言模型 | 训练集词表、输入与标签错位、bigram 基线及文本采样 | 计划中 |
-| 08 | 注意力与小型 Transformer | 从随机初始化训练 decoder-only 模型，与 bigram 比较 | 计划中 |
-| 09 | 复现、推理与结课报告 | 从干净环境训练或加载模型，输出样本并说明能力和限制 | 计划中 |
+| 00 | Python、NumPy 与必要数学 | 函数、数组形状、广播与数值导数 | [代码与练习](00-python-numpy/README.md) |
+| 01 | 一元线性回归 | 闭式最小二乘解、常数基线与测试 MAE | [代码与练习](01-linear-regression/README.md) |
+| 02 | 梯度下降、多元回归与正则化 | NumPy 梯度下降；交叉验证比较 Linear、Ridge 和 Lasso | [代码与练习](02-gradient-descent/README.md) |
+| 03 | 逻辑回归与分类评估 | 不均衡分类；混淆矩阵与验证集阈值选择 | [代码与练习](03-logistic-regression/README.md) |
+| 04 | 决策树、随机森林与梯度提升 | 固定划分、交叉验证比较与错误分析 | [代码与练习](04-tree-models/README.md) |
+| 05 | PyTorch 与多层感知机（MLP） | 训练循环、小批次过拟合、验证与保存加载 | [代码与练习](05-pytorch-mlp/README.md) |
+| 06 | 卷积神经网络（CNN） | 相同数字图像任务比较 MLP 与 CNN，查看错分样本 | [代码与练习](06-cnn/README.md) |
+| 07 | 文本处理与字符级语言模型 | 训练集词表、标签错位、bigram 与采样 | [代码与练习](07-character-language-model/README.md) |
+| 08 | 注意力与小型 Transformer | 手写因果注意力，从随机初始化训练 decoder-only 模型 | [代码与练习](08-tiny-transformer/README.md) |
+| 09 | 复现、推理与结课报告 | 加载检查点、文本生成与报告模板 | [代码与练习](09-inference/README.md) |
 
 这里的“从零训练”指**不加载预训练权重**，可以使用 PyTorch 张量、自动求导和优化器。手写 NumPy 回归帮助理解优化；不用先把每一种算法和底层算子都手写一遍。
+
+## 验证案例
+
+```bash
+# 第一课：无第三方依赖
+python -m unittest discover -s tests -p test_linear.py -v
+# 安装完整依赖后：运行全部行为测试
+python -m unittest discover -s tests -v
+```
+
+测试覆盖梯度下降、分类指标、数据划分、保存重载和注意力因果性。各课的完整运行命令见上表链接；运行成功只是流程检查，学习验收仍以解释代码、复现实验和分析失败为准。实测环境与结果见 [验证记录](docs/VALIDATION.md)。
 
 ## 每个项目都遵守的学习方法
 
