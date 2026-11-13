@@ -1,0 +1,3 @@
+-r requirements-basics.txt
+# 模块 05–09；默认运行 CPU 教学实验。
+torch==2.9.1
